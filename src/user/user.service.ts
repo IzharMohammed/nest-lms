@@ -1,24 +1,32 @@
-import { Injectable } from '@nestjs/common';
+import { ConflictException, Injectable } from '@nestjs/common';
 import { RegisterDto } from 'src/auth/dto/registerUser-auth.dto';
-import { PrismaService } from 'src/prisma.service';
+import { User } from './schemas/user.schema';
+import { Model } from 'mongoose';
+import { InjectModel } from '@nestjs/mongoose';
 
 @Injectable()
 export class UserService {
-  constructor(private prisma: PrismaService) { }
+  constructor(@InjectModel(User.name) private userModel: Model<User>) { }
 
-  async createUser(registerUserDto: RegisterDto) {
+  async createUser(registerUserDto: RegisterDto): Promise<User> {
     try {
-      return await this.prisma.user.create({
-        data:
+      return await this.userModel.create(
         {
           email: registerUserDto.email,
           fname: registerUserDto.fname,
           lname: registerUserDto.lname,
           password: registerUserDto.password
-        }
-      })
-    } catch (error) {
-      console.error(error)
+        })
+
+    } catch (err) {
+      const e = err;
+
+      const DUPLICATE_KEY_CODE = 11000;
+      if (e.code === DUPLICATE_KEY_CODE) {
+        throw new ConflictException('Email is already taken.');
+      }
+
+      throw err;
     }
   }
 }
