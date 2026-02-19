@@ -37,7 +37,6 @@ export class AuthService {
      * 4. return jwt
      */
     const user = await this.usersService.findOne(loginUserDto.email);
-    console.log(user);
 
     if (!user) {
       throw new NotFoundException('Not a registered email');
@@ -58,7 +57,6 @@ export class AuthService {
     };
 
     const access_token = await this.jwtService.signAsync(payload);
-    console.log(access_token);
 
     return { access_token };
   }
