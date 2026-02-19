@@ -7,7 +7,6 @@ export class AuthService {
 
   constructor(private usersService: UserService) { }
 
-  @Post('register')
   async registerUser(registerUserDto: RegisterDto) {
     const saltRounds = 10;
     const hash = await bcrypt.hash(registerUserDto.password, saltRounds);
@@ -25,7 +24,6 @@ export class AuthService {
     return user;
   }
 
-  @Post('login')
   async loginUser(loginUserDto: LoginDto) {
     console.log(loginUserDto);
 
