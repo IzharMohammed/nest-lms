@@ -1,6 +1,6 @@
 import { Injectable, Post } from '@nestjs/common';
 import { UserService } from 'src/user/user.service';
-import { RegisterDto } from './dto/registerUser-auth.dto';
+import { LoginDto, RegisterDto } from './dto/registerUser-auth.dto';
 import bcrypt from "bcrypt";
 @Injectable()
 export class AuthService {
@@ -21,7 +21,14 @@ export class AuthService {
       ...registerUserDto,
       password: hash
     })
-    console.log("user", user);
+
     return user;
+  }
+
+  @Post('login')
+  async loginUser(loginUserDto: LoginDto) {
+    console.log(loginUserDto);
+
+    return "logged in successfully"
   }
 }
