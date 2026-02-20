@@ -19,19 +19,19 @@ export class CourseService {
       })
   }
 
-  findAll() {
-    return `This action returns all course`;
+  async findAll() {
+    return await this.courseModel.find()
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} course`;
+  async findOne(id: number) {
+    return await this.courseModel.findById(id)
   }
 
-  update(id: number, updateCourseDto: UpdateCourseDto) {
-    return `This action updates a #${id} course`;
+  async update(id: number, updateCourseDto: UpdateCourseDto) {
+
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} course`;
+  async remove(id: number) {
+    return await this.courseModel.findByIdAndDelete(id)
   }
 }
