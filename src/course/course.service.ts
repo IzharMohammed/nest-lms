@@ -23,15 +23,15 @@ export class CourseService {
     return await this.courseModel.find()
   }
 
-  async findOne(id: number) {
+  async findOne(id: string) {
     return await this.courseModel.findById(id)
   }
 
   async update(id: number, updateCourseDto: UpdateCourseDto) {
-
+    
   }
 
-  async remove(id: number) {
+  async remove(id: string) {
     return await this.courseModel.findByIdAndDelete(id)
   }
 }

@@ -8,12 +8,11 @@ import { Role } from 'src/user/role.enum';
 import { RolesGuard } from 'src/user/roles.guard';
 
 @Controller('course')
-@UseGuards(AuthGuard)
+@UseGuards(AuthGuard, RolesGuard)
 export class CourseController {
   constructor(private readonly courseService: CourseService) { }
 
   @Post()
-  @UseGuards(RolesGuard)
   @Roles(Role.ADMIN)
   create(@Body() createCourseDto: CreateCourseDto) {
     return this.courseService.create(createCourseDto);
@@ -26,7 +25,7 @@ export class CourseController {
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.courseService.findOne(+id);
+    return this.courseService.findOne(id);
   }
 
   @Patch(':id')
@@ -38,6 +37,6 @@ export class CourseController {
   @Delete(':id')
   @Roles(Role.ADMIN)
   remove(@Param('id') id: string) {
-    return this.courseService.remove(+id);
+    return this.courseService.remove(id);
   }
 }
