@@ -27,8 +27,8 @@ export class CourseService {
     return await this.courseModel.findById(id)
   }
 
-  async update(id: number, updateCourseDto: UpdateCourseDto) {
-    
+  async update(id: string, updateCourseDto: UpdateCourseDto) {
+    return await this.courseModel.findByIdAndUpdate(id, updateCourseDto, { new: true })
   }
 
   async remove(id: string) {

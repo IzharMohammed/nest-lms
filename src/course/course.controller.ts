@@ -31,7 +31,7 @@ export class CourseController {
   @Patch(':id')
   @Roles(Role.ADMIN)
   update(@Param('id') id: string, @Body() updateCourseDto: UpdateCourseDto) {
-    return this.courseService.update(+id, updateCourseDto);
+    return this.courseService.update(id, updateCourseDto);
   }
 
   @Delete(':id')
