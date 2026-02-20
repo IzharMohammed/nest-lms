@@ -3,6 +3,8 @@ import { CourseService } from './course.service';
 import { CreateCourseDto } from './dto/create-course.dto';
 import { UpdateCourseDto } from './dto/update-course.dto';
 import { AuthGuard } from 'src/auth/auth.guard';
+import { Roles } from 'src/user/roles.decorator';
+import { Role } from 'src/user/role.enum';
 
 @Controller('course')
 export class CourseController {
@@ -10,6 +12,7 @@ export class CourseController {
 
   @Post()
   @UseGuards(AuthGuard)
+  @Roles(Role.ADMIN)
   create(@Body() createCourseDto: CreateCourseDto) {
     return this.courseService.create(createCourseDto);
   }
